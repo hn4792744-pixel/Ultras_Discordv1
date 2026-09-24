@@ -1,0 +1,25 @@
+name: Build Plugin
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: temurin
+          cache: maven
+
+      - run: mvn clean package -DskipTests
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Ultras_discord-JAR
+          path: target/Ultras_discord-*.jar
