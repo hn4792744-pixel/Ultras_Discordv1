@@ -1,0 +1,329 @@
+# ======================================================================
+#  Ultras_discord  -  by UC_Hussein   (Paper 1.21+)
+# ======================================================================
+#  !!! SECURITY WARNING / تحذير أمني !!!
+#  discord.bot-token and webhook.url are SECRETS.
+#  بيانات التوكن والويب هوك سرية - لا تشاركها ولا ترفع هذا الملف لأي مكان عام.
+#  The plugin NEVER prints them in the console or in logs.
+#  If a token leaks, reset it immediately in the Discord Developer Portal.
+# ======================================================================
+
+# Language of every message: ar | en   (files: messages_ar.yml / messages_en.yml)
+language: en
+
+# Print extra diagnostic lines to the console.
+debug: false
+
+general:
+  server-name: "Ultras"
+  time-zone: SYSTEM            # SYSTEM or e.g. Asia/Riyadh
+  date-time-format: "yyyy-MM-dd HH:mm"
+  date-format: "yyyy-MM-dd"
+  time-format: "HH:mm"
+
+# Turn every system on/off. Everything can be reloaded with /ucsecurity reload
+modules:
+  statistics: true      # mining statistics (needed by the GUI)
+  xray: true
+  fly: true
+  autoclicker: true
+  kill-logs: true
+  warnings: true        # store warnings (Warnings GUI / books)
+  alerts: true          # staff chat alerts
+  discord: true         # master switch of the Discord integration
+  gui: true
+
+# Who is "staff": OP and/or players having ANY of these permissions.
+# Staff receive alerts and can open /xry_list.
+# Staff are NEVER exempt from X-Ray / AutoClicker detection (only alerts, never a ban).
+staff:
+  op-is-staff: true
+  staff-permissions:
+    - ultras.admin
+    - ultras.sradmin
+    - ultras.mod
+  # true = staff also need ultras.xray / ultras.fly / ultras.autoclicker / ultras.logs to see that alert type
+  require-type-permission: false
+
+# Command run (as the clicking staff member) by the [PUNISHMENTS] button.
+# Placeholders: {player} {uuid}.  The plugin itself never bans anyone.
+punishment-command: "uc gui"
+
+alerts:
+  console: true         # also write alerts to the console
+
+sounds:
+  enabled: true
+  volume: 1.0
+  pitch: 1.0
+  # Bukkit sound names (ENTITY_WITHER_SPAWN) or keys (entity.wither.spawn)
+  xray: ENTITY_WITHER_SPAWN
+  fly: ENTITY_ENDER_DRAGON_GROWL
+  autoclicker: BLOCK_NOTE_BLOCK_PLING
+  combat: ENTITY_ELDER_GUARDIAN_CURSE
+
+# ---------------------------------------------------------------- storage
+storage:
+  per-player-files: true        # true: data/players/UUID.yml + data/warnings/UUID.yml ; false: one central file
+  save-interval-seconds: 60     # batch saving (asynchronous disk IO)
+  warning-expire-days: 3        # 1 / 3 / 7 / 14 / 30 or 0 = never delete. Only expired entries are removed.
+  cleanup-interval-minutes: 10
+  max-warnings-per-player: 200
+
+# ---------------------------------------------------------------- block tracking
+tracking:
+  ignore-creative: true         # blocks broken in creative are not tracked
+  # ALL = every block of the game (discovered from the Material registry, works for new versions automatically)
+  # ORES_ONLY = only ores/ancient debris (+ weights) ; LIST = only `list` + ores
+  mode: ALL
+  list: []
+  exclude: []
+
+# ---------------------------------------------------------------- X-RAY
+xray:
+  enabled: true
+  window-seconds: 600           # analysis window
+  min-window-minutes: 2.0
+  min-blocks: 40                # fewer blocks in the window => confidence is scaled down (no false alarms on tiny samples)
+  min-ores: 6
+  min-strong-indicators: 3      # at least this many indicators must be high, otherwise the score is capped below "suspicious"
+  hidden-ore-check: true        # detects mining straight into ores that had no air contact
+  default-ore-weight: 1.0       # weight of any *_ORE not listed below
+  rare-min-weight: 2.5          # ores with weight >= this count as "rare"
+  ore-weights:
+    ANCIENT_DEBRIS: 4.0
+    DIAMOND_ORE: 3.0
+    DEEPSLATE_DIAMOND_ORE: 3.0
+    EMERALD_ORE: 3.0
+    DEEPSLATE_EMERALD_ORE: 3.0
+    GOLD_ORE: 1.5
+    DEEPSLATE_GOLD_ORE: 1.5
+    NETHER_GOLD_ORE: 0.8
+    LAPIS_ORE: 1.0
+    DEEPSLATE_LAPIS_ORE: 1.0
+    REDSTONE_ORE: 0.8
+    DEEPSLATE_REDSTONE_ORE: 0.8
+    NETHER_QUARTZ_ORE: 0.8
+    IRON_ORE: 0.5
+    DEEPSLATE_IRON_ORE: 0.5
+    COPPER_ORE: 0.3
+    DEEPSLATE_COPPER_ORE: 0.3
+    COAL_ORE: 0.2
+    DEEPSLATE_COAL_ORE: 0.2
+  # suspicion levels (percent)
+  thresholds:
+    monitor: 30
+    suspicious: 50
+    high: 70
+    critical: 85
+  # normal = value of a legit player (indicator 0), extreme = clearly cheating (indicator 1)
+  indicators:
+    rare-rate:     { normal: 1.0,  extreme: 6.0,  weight: 0.22 }   # rare ores per minute
+    ore-ratio:     { normal: 0.06, extreme: 0.30, weight: 0.15 }   # ores / blocks
+    rare-share:    { normal: 0.20, extreme: 0.70, weight: 0.18 }   # rare ores / ores
+    reveal-ratio:  { normal: 0.10, extreme: 0.45, weight: 0.25 }   # blocks that uncovered a hidden ore / blocks
+    find-interval: { normal: 45.0, extreme: 6.0,  weight: 0.10 }   # avg seconds between rare finds (lower = worse)
+    vein-hopping:  { normal: 0.7,  extreme: 4.0,  weight: 0.10 }   # distinct rare veins per minute
+  alerts:
+    enabled: true
+    sound: true
+    min-score: 50               # alert from this suspicion %
+    cooldown-seconds: 120
+    re-alert-delta: 10          # alert earlier again if the score rose by this much
+
+# ---------------------------------------------------------------- FLY (survival/adventure only)
+fly:
+  enabled: true
+  exempt-op: true               # OPs are not checked (set false to check everyone)
+  exempt-permission: "ultras.fly.bypass"
+  log-exempt: false             # true = exempt players are only written to the console
+  min-tps: 16.0                 # detection pauses when the server is lagging
+  max-ping: 400                 # above this ping the points are halved
+  hover-air-moves: 14
+  hover-slack: 0.30
+  ascend-leniency: 0.25
+  max-air-speed: 0.85
+  repeat-flag-moves: 40
+  decay-per-second: 3.0
+  points:
+    hover: 16
+    ascend: 24
+    speed: 14
+  alerts:
+    enabled: true
+    sound: true
+    threshold: 60
+    cooldown-seconds: 60
+
+# ---------------------------------------------------------------- AUTO CLICKER
+autoclicker:
+  enabled: true
+  exempt-permission: "ultras.autoclicker.bypass"
+  ignore-creative: false
+  window-ticks: 120             # 6 seconds
+  min-samples: 25
+  min-cps: 9.0                  # below this nothing is analysed
+  min-strong-indicators: 2
+  decay-per-second: 6.0
+  indicators:
+    cps:         { normal: 12.0, extreme: 20.0, weight: 0.30 }
+    consistency: { normal: 0.40, extreme: 0.12, weight: 0.30 }   # coefficient of variation (lower = worse)
+    repetition:  { normal: 0.70, extreme: 0.95, weight: 0.25 }   # repeating interval pattern
+    burst:       { normal: 0.10, extreme: 0.35, weight: 0.15 }   # several clicks in the same tick
+  alerts:
+    enabled: true
+    sound: true
+    threshold: 70
+    cooldown-seconds: 60
+
+# ---------------------------------------------------------------- KILLS
+kills:
+  recent-stored: 10
+  spam:
+    enabled: true               # COMBAT warning when a player kills too many players too fast
+    kills: 8
+    window-seconds: 300
+    alerts:
+      enabled: true
+      sound: true
+
+# ---------------------------------------------------------------- GUI
+gui:
+  border-material: BLACK_STAINED_GLASS_PANE
+  click-sound: UI_BUTTON_CLICK
+  auto-refresh-seconds: 5       # 0 = off
+  materials:
+    main-sword: DIAMOND_SWORD
+    main-ores: DIAMOND_PICKAXE
+    main-players: PLAYER_HEAD
+    main-warnings: BOOK
+    back: ARROW
+    prev: ARROW
+    next: ARROW
+    close: BARRIER
+    warning-entry: WRITTEN_BOOK
+    btn-punish: ANVIL
+
+# ---------------------------------------------------------------- DISCORD
+# Use a Bot (discord.enabled) and/or a Webhook (webhook.enabled). If both are on, the webhook is used
+# and the bot is the automatic fallback.
+discord:
+  enabled: false
+  bot-token: "PUT_TOKEN_HERE"            # SECRET
+  channel-id: "PUT_CHANNEL_ID_HERE"      # numeric id of the text channel
+  min-interval-ms: 600                   # pause between messages (Discord rate limits)
+  queue-size: 300
+  thumbnail-url: "https://mc-heads.net/avatar/{uuid}/128"   # empty = no head image
+  mention:
+    role-id: ""                          # role pinged for very high suspicion (optional)
+    min-suspicion: 85
+  events:
+    xray: true
+    fly: true
+    autoclicker: true
+    combat: true
+    kills: true
+    warnings: true      # compact log for warnings whose own event is disabled
+    staff-alerts: true  # extra embed when the flagged player is staff
+    security: true      # resets / security actions
+    errors: true        # plugin errors (storage problems ...)
+  embeds:
+    xray:
+      title: "🚨 ULTRAS SECURITY"
+      description: "**X-Ray Detection**"
+      color: "#E74C3C"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      timestamp: true
+      fields:
+        - { name: "Player", value: "{player}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}% ({level})", inline: true }
+        - { name: "Gamemode", value: "{gamemode}", inline: true }
+        - { name: "💎 Diamond", value: "{diamond}", inline: true }
+        - { name: "🟢 Emerald", value: "{emerald}", inline: true }
+        - { name: "🟤 Ancient Debris", value: "{debris}", inline: true }
+        - { name: "Ores / Blocks", value: "{ores} / {blocks}", inline: true }
+        - { name: "Mining rate", value: "{rate} ores/min", inline: true }
+        - { name: "World", value: "{world}", inline: true }
+        - { name: "Detection reasons", value: "{reasons}", inline: false }
+    fly:
+      title: "🚨 ULTRAS SECURITY"
+      description: "**Fly Detection**"
+      color: "#3498DB"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Player", value: "{player}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}% ({level})", inline: true }
+        - { name: "Gamemode", value: "{gamemode}", inline: true }
+        - { name: "World", value: "{world}", inline: true }
+        - { name: "Detection reasons", value: "{reasons}", inline: false }
+    autoclicker:
+      title: "🚨 ULTRAS SECURITY"
+      description: "**AutoClicker Detection**"
+      color: "#F1C40F"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Player", value: "{player}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}% ({level})", inline: true }
+        - { name: "CPS", value: "{cps}", inline: true }
+        - { name: "Pattern", value: "{pattern}", inline: true }
+        - { name: "Detection reasons", value: "{reasons}", inline: false }
+    combat:
+      title: "⚔ ULTRAS SECURITY"
+      description: "**Combat warning**"
+      color: "#E67E22"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Player", value: "{player}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}%", inline: true }
+        - { name: "Reason", value: "{reason}", inline: false }
+    kills:
+      title: "⚔ Kill log"
+      description: "**{killer}** killed **{victim}**"
+      color: "#9B59B6"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Killer kills", value: "{kills}", inline: true }
+        - { name: "K/D", value: "{kd}", inline: true }
+        - { name: "World", value: "{world}", inline: true }
+    warnings:
+      title: "⚠ Warning logged"
+      description: "**{type}** - {player}"
+      color: "#95A5A6"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Warning #", value: "{warning-id}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}% ({level})", inline: true }
+        - { name: "Reason", value: "{reason}", inline: false }
+    staff-alerts:
+      title: "🛡 STAFF ALERT"
+      description: "A staff member triggered a **{type}** detection"
+      color: "#E91E63"
+      thumbnail: true
+      footer: "Ultras_discord • {server}"
+      fields:
+        - { name: "Staff member", value: "{player}", inline: true }
+        - { name: "Suspicion", value: "{suspicion}% ({level})", inline: true }
+        - { name: "Reason", value: "{reason}", inline: false }
+    security:
+      title: "🔒 {title}"
+      description: "{message}"
+      color: "#2ECC71"
+      footer: "Ultras_discord • {server}"
+    errors:
+      title: "❌ Plugin error: {title}"
+      description: "{message}"
+      color: "#C0392B"
+      footer: "Ultras_discord • {server}"
+
+# ---------------------------------------------------------------- DISCORD WEBHOOK
+webhook:
+  enabled: false
+  url: "PUT_WEBHOOK_URL_HERE"            # SECRET
+  username: "Ultras Security"
+  avatar-url: ""

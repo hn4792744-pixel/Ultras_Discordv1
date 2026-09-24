@@ -1,0 +1,312 @@
+# Ultras_discord - English messages (MiniMessage format). Placeholders look like {player}.
+prefix: "<dark_gray>[<gradient:#ff5555:#ffaa00>Ultras</gradient><dark_gray>] <gray>"
+
+types:
+  xray: "X-Ray"
+  fly: "Fly"
+  autoclicker: "AutoClicker"
+  combat: "Combat"
+
+levels:
+  normal: "<green>Normal</green>"
+  monitor: "<yellow>Monitor</yellow>"
+  suspicious: "<gold>Suspicious</gold>"
+  high: "<red>High Suspicion</red>"
+  critical: "<dark_red><bold>Critical</bold></dark_red>"
+
+patterns:
+  consistent: "Highly consistent clicking"
+  repeating: "Repeating interval pattern"
+  burst: "Burst clicking"
+  mixed: "Mixed / unusual"
+
+reasons:
+  xray:
+    rare-rate: "Abnormally high rare-ore rate ({value})"
+    ore-ratio: "Too many ores compared to blocks mined ({value})"
+    rare-share: "Most ores found are rare ores ({value})"
+    reveal-ratio: "Digging straight towards hidden ores ({value} of blocks)"
+    find-interval: "Rare ores found unusually quickly (every {value})"
+    vein-hopping: "Jumping between many different ore veins ({value})"
+    generic: "Combined mining indicators"
+  fly:
+    hover: "Hovering in the air without falling"
+    ascend: "Rising higher than a jump allows ({rise} blocks)"
+    speed: "Air speed above the normal limit"
+  autoclicker:
+    cps: "Very high click speed ({value} CPS)"
+    consistency: "Click intervals are too consistent (variation {value})"
+    repetition: "Repeating click-interval pattern ({value})"
+    burst: "Burst clicking in the same tick ({value})"
+    generic: "Combined click indicators"
+  combat:
+    kill-spam: "{kills} kills in {minutes} minutes"
+
+general:
+  no-permission: "<red>You do not have permission to do that."
+  player-only: "<red>This command can only be used by a player."
+  unknown-player: "<red>No data found for <white>{player}</white>."
+  module-disabled: "<red>The module <white>{module}</white> is disabled in config.yml."
+
+commands:
+  help:
+    - "<gradient:#ff5555:#ffaa00><bold>Ultras_discord</bold></gradient> <gray>by UC_Hussein"
+    - "<yellow>/xry_list <gray>- open the security GUI"
+    - "<yellow>/xry_list refresh <gray>- refresh the data instantly"
+    - "<yellow>/ucsecurity reload <gray>- reload config, messages and Discord"
+    - "<yellow>/ucsecurity refresh <gray>- refresh statistics and GUI"
+    - "<yellow>/ucsecurity resetlogs all <gray>- delete ALL logs (asks for confirmation)"
+    - "<yellow>/ucsecurity resetlogs <player> <gray>- delete one player's logs"
+    - "<yellow>/ucsecurity alerts <gray>- toggle your own staff alerts"
+    - "<yellow>/ucsecurity status <gray>- module and Discord status"
+    - "<yellow>/ucsecurity discordtest <gray>- send a test message to Discord"
+  reloaded: "<green>Configuration, messages and Discord settings reloaded."
+  refreshed: "<green>Data refreshed."
+  xry-usage: "<red>Usage: /xry_list [refresh|open|stats|warnings|blocks|punish <player>] | sword | ores | players"
+  resetlogs-usage: "<red>Usage: /ucsecurity resetlogs <all|player>"
+  resetlogs-confirm: "<red><bold>WARNING:</bold> this deletes ALL logs, statistics and warnings of every player.</red> <click:run_command:'/ucsecurity resetlogs all confirm'><hover:show_text:'<gray>Click to confirm'><green><bold>[CONFIRM]</bold></green></hover></click> <gray>(expires in {seconds}s)"
+  resetlogs-none-pending: "<red>Nothing to confirm (expired). Run <white>/ucsecurity resetlogs all</white> again."
+  resetlogs-all-done: "<green>All logs were deleted (<white>{count}</white> players)."
+  resetlogs-player-done: "<green>Logs of <white>{player}</white> were deleted."
+  alerts-on: "<green>Staff alerts enabled for you."
+  alerts-off: "<yellow>Staff alerts disabled for you."
+  punish-missing: "<red>punishment-command is empty in config.yml."
+  discord-not-ready: "<red>Discord is not configured or is disabled (see config.yml)."
+  discord-test-sent: "<green>Test message queued for Discord."
+  status:
+    - "<gradient:#ff5555:#ffaa00><bold>Ultras_discord</bold></gradient> <gray>v{version} - language {language}"
+    - "<gray>X-Ray: <white>{xray} <gray>Fly: <white>{fly} <gray>AutoClicker: <white>{autoclicker} <gray>Kills: <white>{kills}"
+    - "<gray>Discord: <white>{discord} <gray>Tracked players: <white>{players}"
+
+console:
+  alert: "[{type}] {player} - {suspicion}% ({level}) - {reason}"
+
+alerts:
+  xray:
+    - ""
+    - "<dark_red><bold>⚠ X-RAY SUSPICION ⚠</bold></dark_red>"
+    - "<gray>Player: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>Suspicion: {level-mm} <white>{suspicion}%"
+    - "<gray>Diamond: <aqua>{diamond} <gray>Emerald: <green>{emerald} <gray>Ancient Debris: <gold>{debris}"
+    - "<gray>Ores: <white>{ores} <gray>Blocks: <white>{blocks} <gray>Rate: <white>{rate} ores/min"
+    - "<gray>Reasons: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>Open the player profile'><green><bold>[OPEN PLAYER]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>Runs: /{punish-command}'><red><bold>[PUNISHMENTS]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>Open the warnings'><yellow><bold>[WARNINGS]</bold></yellow></hover></click>"
+    - ""
+  fly:
+    - ""
+    - "<dark_red><bold>⚠ FLY SUSPICION ⚠</bold></dark_red>"
+    - "<gray>Player: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>Suspicion: {level-mm} <white>{suspicion}%"
+    - "<gray>Reasons: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>Open the player profile'><green><bold>[OPEN PLAYER]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>Runs: /{punish-command}'><red><bold>[PUNISHMENTS]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>Open the warnings'><yellow><bold>[WARNINGS]</bold></yellow></hover></click>"
+    - ""
+  autoclicker:
+    - ""
+    - "<dark_red><bold>⚠ AUTOCLICKER SUSPICION ⚠</bold></dark_red>"
+    - "<gray>Player: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>Suspicion: {level-mm} <white>{suspicion}%"
+    - "<gray>CPS: <white>{cps} <gray>Pattern: <white>{pattern}"
+    - "<gray>Reasons: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>Open the player profile'><green><bold>[OPEN PLAYER]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>Runs: /{punish-command}'><red><bold>[PUNISHMENTS]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>Open the warnings'><yellow><bold>[WARNINGS]</bold></yellow></hover></click>"
+    - ""
+  combat:
+    - ""
+    - "<dark_red><bold>⚠ COMBAT WARNING ⚠</bold></dark_red>"
+    - "<gray>Player: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>Reason: <yellow>{reason}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>Open the player profile'><green><bold>[OPEN PLAYER]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>Runs: /{punish-command}'><red><bold>[PUNISHMENTS]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>Open the warnings'><yellow><bold>[WARNINGS]</bold></yellow></hover></click>"
+    - ""
+  # plain text stored inside each warning (shown in the warning book)
+  details:
+    xray:
+      - "Diamond: {diamond} | Emerald: {emerald} | Ancient Debris: {debris}"
+      - "Ores: {ores} | Blocks: {blocks} | Rate: {rate} ores/min"
+      - "Reasons: {reasons}"
+    fly:
+      - "Gamemode: {gamemode} | World: {world}"
+      - "Reasons: {reasons}"
+    autoclicker:
+      - "CPS: {cps} | Pattern: {pattern}"
+      - "Reasons: {reasons}"
+    combat:
+      - "Reason: {reason}"
+
+gui:
+  never: "Never"
+  online: "Online"
+  offline: "Offline"
+  answer-yes: "Yes"
+  answer-no: "No"
+  mode-all: "All blocks"
+  mode-ores: "Ores only"
+  click-profile: "<yellow>Click to open the profile"
+  recent-kills-header: "<gray>Recent kills:"
+  recent-kill-line: "<dark_gray> - <white>{victim} <dark_gray>({when})"
+  stats-top-line: "<dark_gray> - <white>{block}<gray>: <aqua>{amount}"
+  stats-area-line: "<dark_gray> - <white>{world} <gray>[{cx}, {cz}]<gray>: <aqua>{ores} ores"
+  warning-book-title: "Warning #{id}"
+  warning-book-details-header: "<dark_red><bold>Details</bold></dark_red>"
+  warning-book:
+    - "<dark_red><bold>Warning #{id}</bold></dark_red>"
+    - ""
+    - "<black>Player: {player}"
+    - "<black>Type: {type}"
+    - "<black>Date: {date}"
+    - "<black>Time: {time}"
+    - "<black>Suspicion: {suspicion}% ({level})"
+    - ""
+    - "<black>Reason:"
+    - "<dark_gray>{reason}"
+  titles:
+    main: "<dark_red>Ultras <dark_gray>» <black>Security"
+    kills: "<dark_red>Sword <dark_gray>» <black>Kill statistics"
+    ores: "<dark_red>Ores <dark_gray>» <black>Tracked blocks"
+    ores-player: "<dark_red>Blocks <dark_gray>» <black>{player}"
+    players: "<dark_red>Players <dark_gray>» <black>By suspicion"
+    profile: "<dark_red>Profile <dark_gray>» <black>{player}"
+    stats: "<dark_red>Statistics <dark_gray>» <black>{player}"
+    warnings: "<dark_red>Warnings <dark_gray>» <black>All"
+    warnings-player: "<dark_red>Warnings <dark_gray>» <black>{player}"
+  items:
+    close: { name: "<red><bold>Close</bold>", lore: [] }
+    back: { name: "<yellow><bold>« Back</bold>", lore: [] }
+    prev: { name: "<yellow>« Previous page", lore: [] }
+    next: { name: "<yellow>Next page »", lore: [] }
+    page: { name: "<white>Page {page}/{pages}", lore: ["<gray>Entries: <white>{total}"] }
+    toggle-ores:
+      name: "<aqua>Filter"
+      lore: ["<gray>Showing: <white>{mode}", "", "<yellow>Click to switch"]
+    main-sword:
+      name: "<red><bold>⚔ Sword</bold>"
+      lore: ["<gray>Kill statistics of all players", "<gray>Kills, deaths, kill rate, warnings", "", "<yellow>Click to open"]
+    main-ores:
+      name: "<aqua><bold>⛏ Ores</bold>"
+      lore: ["<gray>Every tracked block: amount,", "<gray>percentage, rate and X-Ray contribution", "", "<yellow>Click to open"]
+    main-players:
+      name: "<green><bold>☺ Players</bold>"
+      lore: ["<gray>Players sorted by suspicion", "<gray>Tracked players: <white>{players}", "", "<yellow>Click to open"]
+    main-warnings:
+      name: "<gold><bold>✎ Warnings</bold>"
+      lore: ["<gray>All stored warnings as books", "<gray>Stored warnings: <white>{warnings}", "", "<yellow>Click to open"]
+    main-refresh:
+      name: "<white><bold>⟳ Refresh</bold>"
+      lore: ["<gray>Update statistics instantly"]
+    sword-info:
+      name: "<red><bold>⚔ Kill statistics</bold>"
+      lore: ["<gray>Sorted by kills (highest first)"]
+    players-info:
+      name: "<green><bold>Players by suspicion</bold>"
+      lore: ["<gray>Highest overall suspicion first"]
+    ores-info:
+      name: "<aqua><bold>Server-wide blocks</bold>"
+      lore: ["<gray>Contribution = average X-Ray points", "<gray>caused by each block type"]
+    warnings-info:
+      name: "<gold><bold>Latest warnings</bold>"
+      lore: ["<gray>Newest first. Click a book to read it."]
+    kill-entry:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>Kills: <white>{kills}"
+        - "<gray>Deaths: <white>{deaths}"
+        - "<gray>K/D: <white>{kd}"
+        - "<gray>Last kill: <white>{last-kill}"
+        - "<gray>Kill rate: <white>{kill-rate}/hour"
+        - "<gray>Combat warnings: <white>{combat-warnings}"
+        - "<gray>Updated: <white>{updated}"
+    player-entry:
+      name: "<yellow><bold>{player}</bold> <dark_gray>({status})"
+      lore:
+        - "<gray>Overall: {overall-level-mm} <white>{overall}%"
+        - "<gray>X-Ray: <white>{xray}% <gray>Fly: <white>{fly}% <gray>Clicker: <white>{click}%"
+        - "<gray>Warnings: <white>{warnings}"
+        - "<gray>Last detection: <white>{last-detection}"
+        - ""
+        - "<yellow>Click to open the profile"
+    ore-entry:
+      name: "<aqua><bold>{block}</bold>"
+      lore:
+        - "<gray>Mined: <white>{amount}"
+        - "<gray>Share: <white>{percent}%"
+        - "<gray>Mining rate: <white>{rate-min}/min <dark_gray>({rate-hour}/h)"
+        - "<gray>Last mined: <white>{last}"
+        - "<gray>Ore: <white>{ore}"
+        - "<gray>X-Ray contribution: <white>{contribution} pts"
+    warning-entry:
+      name: "<gold><bold>Warning #{id}</bold>"
+      lore:
+        - "<gray>Player: <white>{player}"
+        - "<gray>Type: <white>{type}"
+        - "<gray>Date: <white>{date} <gray>Time: <white>{time}"
+        - "<gray>Suspicion: {level-mm} <white>{suspicion}%"
+        - "<gray>Reason: <yellow>{reason}"
+        - ""
+        - "<yellow>Click to open the book"
+    profile-head:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>UUID: <white>{uuid}"
+        - "<gray>Status: <white>{status}"
+        - "<gray>Gamemode: <white>{gamemode}"
+        - "<gray>World: <white>{world}"
+        - "<gray>Play time: <white>{playtime}"
+    profile-mini:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>Status: <white>{status}"
+        - "<gray>Overall: {overall-level-mm} <white>{overall}%"
+    p-blocks: { name: "<white>Blocks mined", lore: ["<aqua>{blocks}"] }
+    p-ores: { name: "<white>Ores mined", lore: ["<aqua>{ores}"] }
+    p-rare: { name: "<white>Rare ores", lore: ["<aqua>{rare}"] }
+    p-kills: { name: "<white>Kills", lore: ["<aqua>{kills} <gray>(K/D {kd})"] }
+    p-deaths: { name: "<white>Deaths", lore: ["<aqua>{deaths}"] }
+    p-warnings: { name: "<white>Warnings", lore: ["<aqua>{warnings}"] }
+    p-playtime: { name: "<white>Play time", lore: ["<aqua>{playtime}"] }
+    p-xray: { name: "<white>X-Ray suspicion", lore: ["{xray-level-mm} <white>{xray}%"] }
+    p-fly: { name: "<white>Fly suspicion", lore: ["{fly-level-mm} <white>{fly}%"] }
+    p-click: { name: "<white>AutoClicker suspicion", lore: ["{click-level-mm} <white>{click}%"] }
+    p-overall: { name: "<white><bold>Overall suspicion</bold>", lore: ["{overall-level-mm} <white>{overall}%"] }
+    p-last:
+      name: "<white>Last detection"
+      lore: ["<yellow>{last-detection}", "<gray>{last-reason}"]
+    btn-stats: { name: "<green>Statistics", lore: ["<gray>Detailed statistics"] }
+    btn-warnings: { name: "<gold>Warnings", lore: ["<gray>Warning books: <white>{warnings}"] }
+    btn-blocks: { name: "<aqua>Blocks", lore: ["<gray>Every block this player mined"] }
+    btn-punish:
+      name: "<red><bold>Punishments</bold>"
+      lore: ["<gray>Runs the punishment command", "<gray>configured in config.yml", "<dark_gray>(never bans automatically)"]
+    stats-mining:
+      name: "<aqua><bold>Mining</bold>"
+      lore:
+        - "<gray>Blocks: <white>{blocks} <dark_gray>({blocks-min}/min)"
+        - "<gray>Ores: <white>{ores} <dark_gray>({ores-min}/min)"
+        - "<gray>Rare ores: <white>{rare} <dark_gray>({rare-hour}/h)"
+        - "<gray>Active mining time: <white>{active-mining}"
+    stats-combat:
+      name: "<red><bold>Combat</bold>"
+      lore:
+        - "<gray>Kills: <white>{kills}"
+        - "<gray>Deaths: <white>{deaths}"
+        - "<gray>K/D: <white>{kd}"
+        - "<gray>Kills last hour: <white>{kill-rate}"
+        - "<gray>Last kill: <white>{last-kill}"
+    stats-detect:
+      name: "<gold><bold>Detections</bold>"
+      lore:
+        - "<gray>X-Ray warnings: <white>{w-xray}"
+        - "<gray>Fly warnings: <white>{w-fly}"
+        - "<gray>AutoClicker warnings: <white>{w-click}"
+        - "<gray>Combat warnings: <white>{w-combat}"
+        - "<gray>Overall: {overall-level-mm} <white>{overall}%"
+    stats-time:
+      name: "<green><bold>Time</bold>"
+      lore:
+        - "<gray>First seen: <white>{first-seen}"
+        - "<gray>Last seen: <white>{last-seen}"
+        - "<gray>Play time: <white>{playtime}"
+        - "<gray>Updated: <white>{updated}"
+    stats-top:
+      name: "<aqua><bold>Top blocks</bold>"
+      lore: []
+    stats-areas:
+      name: "<yellow><bold>Mining areas</bold>"
+      lore: ["<gray>Chunks with the most ores:"]

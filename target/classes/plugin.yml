@@ -1,0 +1,62 @@
+name: Ultras_discord
+version: '1.0.0'
+main: me.uc.hussein.ultrasdiscord.UltrasDiscord
+api-version: '1.21'
+author: UC_Hussein
+authors: [UC_Hussein]
+description: Advanced X-Ray / Fly / AutoClicker security, statistics GUI and Discord logging.
+load: POSTWORLD
+
+commands:
+  xry_list:
+    description: Open the Ultras security GUI
+    usage: /xry_list [refresh]
+    aliases: [xrylist]
+  ucsecurity:
+    description: Ultras_discord administration command
+    usage: /ucsecurity <reload|refresh|resetlogs|alerts|status|discordtest>
+    aliases: [ucsec]
+
+permissions:
+  ultras.admin:
+    description: Full access to every Ultras_discord feature
+    default: op
+    children:
+      ultras.xray: true
+      ultras.fly: true
+      ultras.autoclicker: true
+      ultras.logs: true
+      ultras.gui: true
+      ultras.resetlogs: true
+      ultras.reload: true
+      ultras.punish: true
+  ultras.xray:
+    description: Receive X-Ray alerts
+    default: op
+  ultras.fly:
+    description: Receive Fly alerts
+    default: op
+  ultras.autoclicker:
+    description: Receive AutoClicker alerts
+    default: op
+  ultras.logs:
+    description: View/refresh logs and combat alerts
+    default: op
+  ultras.gui:
+    description: Open /xry_list
+    default: op
+  ultras.resetlogs:
+    description: Use /ucsecurity resetlogs
+    default: op
+  ultras.reload:
+    description: Use /ucsecurity reload
+    default: op
+  ultras.punish:
+    description: Use the PUNISHMENTS button
+    default: op
+  ultras.fly.bypass:
+    description: Not checked by the Anti-Fly module
+    default: false
+  ultras.autoclicker.bypass:
+    description: Not checked by the Anti-AutoClicker module
+    default: false

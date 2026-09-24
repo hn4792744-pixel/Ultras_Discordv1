@@ -1,0 +1,311 @@
+# Ultras_discord - الرسائل العربية (صيغة MiniMessage). المتغيرات مثل {player}.
+prefix: "<dark_gray>[<gradient:#ff5555:#ffaa00>Ultras</gradient><dark_gray>] <gray>"
+
+types:
+  xray: "اكس راي"
+  fly: "طيران"
+  autoclicker: "أوتو كليكر"
+  combat: "قتال"
+
+levels:
+  normal: "<green>طبيعي</green>"
+  monitor: "<yellow>مراقبة</yellow>"
+  suspicious: "<gold>مشبوه</gold>"
+  high: "<red>شبهة عالية</red>"
+  critical: "<dark_red><bold>حرج</bold></dark_red>"
+
+patterns:
+  consistent: "نقرات منتظمة جدًا"
+  repeating: "نمط فواصل متكرر"
+  burst: "نقرات متتابعة دفعة واحدة"
+  mixed: "مختلط / غير معتاد"
+
+reasons:
+  xray:
+    rare-rate: "معدل استخراج الخامات النادرة مرتفع جدًا ({value})"
+    ore-ratio: "خامات كثيرة مقارنة بالبلوكات المحفورة ({value})"
+    rare-share: "أغلب الخامات المستخرجة نادرة ({value})"
+    reveal-ratio: "الحفر مباشرة نحو خامات مخفية ({value} من البلوكات)"
+    find-interval: "العثور على خامات نادرة بسرعة غير طبيعية (كل {value})"
+    vein-hopping: "التنقل بين عروق خامات كثيرة ({value})"
+    generic: "مؤشرات تعدين مجتمعة"
+  fly:
+    hover: "التحليق في الهواء دون سقوط"
+    ascend: "الصعود لارتفاع أعلى من القفز الطبيعي ({rise} بلوك)"
+    speed: "سرعة في الهواء أعلى من الحد الطبيعي"
+  autoclicker:
+    cps: "سرعة نقر عالية جدًا ({value} CPS)"
+    consistency: "فواصل النقر منتظمة أكثر من اللازم (التباين {value})"
+    repetition: "نمط فواصل نقر متكرر ({value})"
+    burst: "نقرات متعددة في نفس التيك ({value})"
+    generic: "مؤشرات نقر مجتمعة"
+  combat:
+    kill-spam: "{kills} عمليات قتل خلال {minutes} دقائق"
+
+general:
+  no-permission: "<red>ليس لديك صلاحية لاستخدام هذا الأمر."
+  player-only: "<red>هذا الأمر للاعبين فقط."
+  unknown-player: "<red>لا توجد بيانات للاعب <white>{player}</white>."
+  module-disabled: "<red>الوحدة <white>{module}</white> معطلة في config.yml."
+
+commands:
+  help:
+    - "<gradient:#ff5555:#ffaa00><bold>Ultras_discord</bold></gradient> <gray>by UC_Hussein"
+    - "<yellow>/xry_list <gray>- فتح واجهة الأمان"
+    - "<yellow>/xry_list refresh <gray>- تحديث البيانات فورًا"
+    - "<yellow>/ucsecurity reload <gray>- إعادة تحميل الإعدادات والرسائل وDiscord"
+    - "<yellow>/ucsecurity refresh <gray>- تحديث الإحصائيات والواجهة"
+    - "<yellow>/ucsecurity resetlogs all <gray>- حذف كل السجلات (مع تأكيد)"
+    - "<yellow>/ucsecurity resetlogs <player> <gray>- حذف سجلات لاعب واحد"
+    - "<yellow>/ucsecurity alerts <gray>- تشغيل/إيقاف تنبيهاتك"
+    - "<yellow>/ucsecurity status <gray>- حالة الوحدات وDiscord"
+    - "<yellow>/ucsecurity discordtest <gray>- إرسال رسالة اختبار إلى Discord"
+  reloaded: "<green>تم إعادة تحميل الإعدادات والرسائل وإعدادات Discord."
+  refreshed: "<green>تم تحديث البيانات."
+  xry-usage: "<red>الاستخدام: /xry_list [refresh|open|stats|warnings|blocks|punish <لاعب>] | sword | ores | players"
+  resetlogs-usage: "<red>الاستخدام: /ucsecurity resetlogs <all|لاعب>"
+  resetlogs-confirm: "<red><bold>تحذير:</bold> سيتم حذف كل السجلات والإحصائيات والتحذيرات لجميع اللاعبين.</red> <click:run_command:'/ucsecurity resetlogs all confirm'><hover:show_text:'<gray>اضغط للتأكيد'><green><bold>[تأكيد]</bold></green></hover></click> <gray>(تنتهي خلال {seconds} ثانية)"
+  resetlogs-none-pending: "<red>لا يوجد شيء لتأكيده (انتهت المهلة). نفذ <white>/ucsecurity resetlogs all</white> مرة أخرى."
+  resetlogs-all-done: "<green>تم حذف كل السجلات (<white>{count}</white> لاعب)."
+  resetlogs-player-done: "<green>تم حذف سجلات اللاعب <white>{player}</white>."
+  alerts-on: "<green>تم تفعيل تنبيهات الستاف لك."
+  alerts-off: "<yellow>تم إيقاف تنبيهات الستاف لك."
+  punish-missing: "<red>خيار punishment-command فارغ في config.yml."
+  discord-not-ready: "<red>Discord غير مفعل أو غير مُعدّ (راجع config.yml)."
+  discord-test-sent: "<green>تمت إضافة رسالة الاختبار إلى قائمة الإرسال."
+  status:
+    - "<gradient:#ff5555:#ffaa00><bold>Ultras_discord</bold></gradient> <gray>v{version} - اللغة {language}"
+    - "<gray>X-Ray: <white>{xray} <gray>Fly: <white>{fly} <gray>AutoClicker: <white>{autoclicker} <gray>Kills: <white>{kills}"
+    - "<gray>Discord: <white>{discord} <gray>اللاعبون المتتبعون: <white>{players}"
+
+console:
+  alert: "[{type}] {player} - {suspicion}% ({level}) - {reason}"
+
+alerts:
+  xray:
+    - ""
+    - "<dark_red><bold>⚠ اشتباه X-RAY ⚠</bold></dark_red>"
+    - "<gray>اللاعب: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>نسبة الشك: {level-mm} <white>{suspicion}%"
+    - "<gray>دايموند: <aqua>{diamond} <gray>زمرد: <green>{emerald} <gray>ancient debris: <gold>{debris}"
+    - "<gray>الخامات: <white>{ores} <gray>البلوكات: <white>{blocks} <gray>المعدل: <white>{rate} خام/دقيقة"
+    - "<gray>الأسباب: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>فتح ملف اللاعب'><green><bold>[فتح اللاعب]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>ينفذ: /{punish-command}'><red><bold>[العقوبات]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>فتح التحذيرات'><yellow><bold>[التحذيرات]</bold></yellow></hover></click>"
+    - ""
+  fly:
+    - ""
+    - "<dark_red><bold>⚠ اشتباه FLY ⚠</bold></dark_red>"
+    - "<gray>اللاعب: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>نسبة الشك: {level-mm} <white>{suspicion}%"
+    - "<gray>الأسباب: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>فتح ملف اللاعب'><green><bold>[فتح اللاعب]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>ينفذ: /{punish-command}'><red><bold>[العقوبات]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>فتح التحذيرات'><yellow><bold>[التحذيرات]</bold></yellow></hover></click>"
+    - ""
+  autoclicker:
+    - ""
+    - "<dark_red><bold>⚠ اشتباه AUTOCLICKER ⚠</bold></dark_red>"
+    - "<gray>اللاعب: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>نسبة الشك: {level-mm} <white>{suspicion}%"
+    - "<gray>CPS: <white>{cps} <gray>النمط: <white>{pattern}"
+    - "<gray>الأسباب: <yellow>{reasons}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>فتح ملف اللاعب'><green><bold>[فتح اللاعب]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>ينفذ: /{punish-command}'><red><bold>[العقوبات]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>فتح التحذيرات'><yellow><bold>[التحذيرات]</bold></yellow></hover></click>"
+    - ""
+  combat:
+    - ""
+    - "<dark_red><bold>⚠ تحذير قتال ⚠</bold></dark_red>"
+    - "<gray>اللاعب: <white>{player} <dark_gray>({gamemode}, {world})"
+    - "<gray>السبب: <yellow>{reason}"
+    - "<click:run_command:'/xry_list open {uuid}'><hover:show_text:'<gray>فتح ملف اللاعب'><green><bold>[فتح اللاعب]</bold></green></hover></click> <click:run_command:'/{punish-command}'><hover:show_text:'<gray>ينفذ: /{punish-command}'><red><bold>[العقوبات]</bold></red></hover></click> <click:run_command:'/xry_list warnings {uuid}'><hover:show_text:'<gray>فتح التحذيرات'><yellow><bold>[التحذيرات]</bold></yellow></hover></click>"
+    - ""
+  details:
+    xray:
+      - "دايموند: {diamond} | زمرد: {emerald} | ancient debris: {debris}"
+      - "الخامات: {ores} | البلوكات: {blocks} | المعدل: {rate} خام/دقيقة"
+      - "الأسباب: {reasons}"
+    fly:
+      - "الوضع: {gamemode} | العالم: {world}"
+      - "الأسباب: {reasons}"
+    autoclicker:
+      - "CPS: {cps} | النمط: {pattern}"
+      - "الأسباب: {reasons}"
+    combat:
+      - "السبب: {reason}"
+
+gui:
+  never: "أبدًا"
+  online: "متصل"
+  offline: "غير متصل"
+  answer-yes: "نعم"
+  answer-no: "لا"
+  mode-all: "كل البلوكات"
+  mode-ores: "الخامات فقط"
+  click-profile: "<yellow>اضغط لفتح الملف"
+  recent-kills-header: "<gray>آخر عمليات القتل:"
+  recent-kill-line: "<dark_gray> - <white>{victim} <dark_gray>({when})"
+  stats-top-line: "<dark_gray> - <white>{block}<gray>: <aqua>{amount}"
+  stats-area-line: "<dark_gray> - <white>{world} <gray>[{cx}, {cz}]<gray>: <aqua>{ores} خام"
+  warning-book-title: "تحذير #{id}"
+  warning-book-details-header: "<dark_red><bold>التفاصيل</bold></dark_red>"
+  warning-book:
+    - "<dark_red><bold>تحذير رقم {id}</bold></dark_red>"
+    - ""
+    - "<black>اللاعب: {player}"
+    - "<black>النوع: {type}"
+    - "<black>التاريخ: {date}"
+    - "<black>الوقت: {time}"
+    - "<black>نسبة الشك: {suspicion}% ({level})"
+    - ""
+    - "<black>السبب:"
+    - "<dark_gray>{reason}"
+  titles:
+    main: "<dark_red>Ultras <dark_gray>» <black>الأمان"
+    kills: "<dark_red>السيف <dark_gray>» <black>إحصائيات القتل"
+    ores: "<dark_red>الخامات <dark_gray>» <black>البلوكات المتتبعة"
+    ores-player: "<dark_red>البلوكات <dark_gray>» <black>{player}"
+    players: "<dark_red>اللاعبون <dark_gray>» <black>حسب الشك"
+    profile: "<dark_red>الملف <dark_gray>» <black>{player}"
+    stats: "<dark_red>الإحصائيات <dark_gray>» <black>{player}"
+    warnings: "<dark_red>التحذيرات <dark_gray>» <black>الكل"
+    warnings-player: "<dark_red>التحذيرات <dark_gray>» <black>{player}"
+  items:
+    close: { name: "<red><bold>إغلاق</bold>", lore: [] }
+    back: { name: "<yellow><bold>« رجوع</bold>", lore: [] }
+    prev: { name: "<yellow>« الصفحة السابقة", lore: [] }
+    next: { name: "<yellow>الصفحة التالية »", lore: [] }
+    page: { name: "<white>الصفحة {page}/{pages}", lore: ["<gray>العناصر: <white>{total}"] }
+    toggle-ores:
+      name: "<aqua>الفلتر"
+      lore: ["<gray>المعروض: <white>{mode}", "", "<yellow>اضغط للتبديل"]
+    main-sword:
+      name: "<red><bold>⚔ السيف</bold>"
+      lore: ["<gray>إحصائيات القتل لكل اللاعبين", "<gray>القتل، الموت، المعدل، التحذيرات", "", "<yellow>اضغط للفتح"]
+    main-ores:
+      name: "<aqua><bold>⛏ الخامات</bold>"
+      lore: ["<gray>كل بلوك متتبع: الكمية،", "<gray>النسبة، المعدل ومساهمته في الشك", "", "<yellow>اضغط للفتح"]
+    main-players:
+      name: "<green><bold>☺ اللاعبون</bold>"
+      lore: ["<gray>اللاعبون مرتبون حسب الشك", "<gray>اللاعبون المتتبعون: <white>{players}", "", "<yellow>اضغط للفتح"]
+    main-warnings:
+      name: "<gold><bold>✎ التحذيرات</bold>"
+      lore: ["<gray>كل التحذيرات المخزنة ككتب", "<gray>التحذيرات: <white>{warnings}", "", "<yellow>اضغط للفتح"]
+    main-refresh:
+      name: "<white><bold>⟳ تحديث</bold>"
+      lore: ["<gray>تحديث الإحصائيات فورًا"]
+    sword-info:
+      name: "<red><bold>⚔ إحصائيات القتل</bold>"
+      lore: ["<gray>مرتبة حسب عدد القتل (الأعلى أولًا)"]
+    players-info:
+      name: "<green><bold>اللاعبون حسب الشك</bold>"
+      lore: ["<gray>الأعلى شكًا أولًا"]
+    ores-info:
+      name: "<aqua><bold>بلوكات السيرفر</bold>"
+      lore: ["<gray>المساهمة = متوسط نقاط الـ X-Ray", "<gray>الناتجة عن كل نوع بلوك"]
+    warnings-info:
+      name: "<gold><bold>آخر التحذيرات</bold>"
+      lore: ["<gray>الأحدث أولًا. اضغط على كتاب لقراءته."]
+    kill-entry:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>القتل: <white>{kills}"
+        - "<gray>الموت: <white>{deaths}"
+        - "<gray>K/D: <white>{kd}"
+        - "<gray>آخر قتل: <white>{last-kill}"
+        - "<gray>معدل القتل: <white>{kill-rate}/ساعة"
+        - "<gray>تحذيرات القتال: <white>{combat-warnings}"
+        - "<gray>آخر تحديث: <white>{updated}"
+    player-entry:
+      name: "<yellow><bold>{player}</bold> <dark_gray>({status})"
+      lore:
+        - "<gray>الإجمالي: {overall-level-mm} <white>{overall}%"
+        - "<gray>X-Ray: <white>{xray}% <gray>Fly: <white>{fly}% <gray>Clicker: <white>{click}%"
+        - "<gray>التحذيرات: <white>{warnings}"
+        - "<gray>آخر اكتشاف: <white>{last-detection}"
+        - ""
+        - "<yellow>اضغط لفتح الملف"
+    ore-entry:
+      name: "<aqua><bold>{block}</bold>"
+      lore:
+        - "<gray>المستخرج: <white>{amount}"
+        - "<gray>النسبة: <white>{percent}%"
+        - "<gray>معدل التعدين: <white>{rate-min}/د <dark_gray>({rate-hour}/س)"
+        - "<gray>آخر تعدين: <white>{last}"
+        - "<gray>خام: <white>{ore}"
+        - "<gray>مساهمته في الشك: <white>{contribution} نقطة"
+    warning-entry:
+      name: "<gold><bold>تحذير #{id}</bold>"
+      lore:
+        - "<gray>اللاعب: <white>{player}"
+        - "<gray>النوع: <white>{type}"
+        - "<gray>التاريخ: <white>{date} <gray>الوقت: <white>{time}"
+        - "<gray>نسبة الشك: {level-mm} <white>{suspicion}%"
+        - "<gray>السبب: <yellow>{reason}"
+        - ""
+        - "<yellow>اضغط لفتح الكتاب"
+    profile-head:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>UUID: <white>{uuid}"
+        - "<gray>الحالة: <white>{status}"
+        - "<gray>الوضع: <white>{gamemode}"
+        - "<gray>العالم: <white>{world}"
+        - "<gray>وقت اللعب: <white>{playtime}"
+    profile-mini:
+      name: "<yellow><bold>{player}</bold>"
+      lore:
+        - "<gray>الحالة: <white>{status}"
+        - "<gray>الإجمالي: {overall-level-mm} <white>{overall}%"
+    p-blocks: { name: "<white>البلوكات المحفورة", lore: ["<aqua>{blocks}"] }
+    p-ores: { name: "<white>الخامات المستخرجة", lore: ["<aqua>{ores}"] }
+    p-rare: { name: "<white>الخامات النادرة", lore: ["<aqua>{rare}"] }
+    p-kills: { name: "<white>القتل", lore: ["<aqua>{kills} <gray>(K/D {kd})"] }
+    p-deaths: { name: "<white>الموت", lore: ["<aqua>{deaths}"] }
+    p-warnings: { name: "<white>التحذيرات", lore: ["<aqua>{warnings}"] }
+    p-playtime: { name: "<white>وقت اللعب", lore: ["<aqua>{playtime}"] }
+    p-xray: { name: "<white>شك X-Ray", lore: ["{xray-level-mm} <white>{xray}%"] }
+    p-fly: { name: "<white>شك Fly", lore: ["{fly-level-mm} <white>{fly}%"] }
+    p-click: { name: "<white>شك AutoClicker", lore: ["{click-level-mm} <white>{click}%"] }
+    p-overall: { name: "<white><bold>الشك الإجمالي</bold>", lore: ["{overall-level-mm} <white>{overall}%"] }
+    p-last:
+      name: "<white>آخر اكتشاف"
+      lore: ["<yellow>{last-detection}", "<gray>{last-reason}"]
+    btn-stats: { name: "<green>الإحصائيات", lore: ["<gray>إحصائيات مفصلة"] }
+    btn-warnings: { name: "<gold>التحذيرات", lore: ["<gray>كتب التحذيرات: <white>{warnings}"] }
+    btn-blocks: { name: "<aqua>البلوكات", lore: ["<gray>كل بلوك حفره اللاعب"] }
+    btn-punish:
+      name: "<red><bold>العقوبات</bold>"
+      lore: ["<gray>ينفذ أمر العقوبات", "<gray>المحدد في config.yml", "<dark_gray>(لا يحظر تلقائيًا أبدًا)"]
+    stats-mining:
+      name: "<aqua><bold>التعدين</bold>"
+      lore:
+        - "<gray>البلوكات: <white>{blocks} <dark_gray>({blocks-min}/د)"
+        - "<gray>الخامات: <white>{ores} <dark_gray>({ores-min}/د)"
+        - "<gray>الخامات النادرة: <white>{rare} <dark_gray>({rare-hour}/س)"
+        - "<gray>وقت التعدين الفعلي: <white>{active-mining}"
+    stats-combat:
+      name: "<red><bold>القتال</bold>"
+      lore:
+        - "<gray>القتل: <white>{kills}"
+        - "<gray>الموت: <white>{deaths}"
+        - "<gray>K/D: <white>{kd}"
+        - "<gray>القتل آخر ساعة: <white>{kill-rate}"
+        - "<gray>آخر قتل: <white>{last-kill}"
+    stats-detect:
+      name: "<gold><bold>الاكتشافات</bold>"
+      lore:
+        - "<gray>تحذيرات X-Ray: <white>{w-xray}"
+        - "<gray>تحذيرات Fly: <white>{w-fly}"
+        - "<gray>تحذيرات AutoClicker: <white>{w-click}"
+        - "<gray>تحذيرات القتال: <white>{w-combat}"
+        - "<gray>الإجمالي: {overall-level-mm} <white>{overall}%"
+    stats-time:
+      name: "<green><bold>الوقت</bold>"
+      lore:
+        - "<gray>أول ظهور: <white>{first-seen}"
+        - "<gray>آخر ظهور: <white>{last-seen}"
+        - "<gray>وقت اللعب: <white>{playtime}"
+        - "<gray>آخر تحديث: <white>{updated}"
+    stats-top:
+      name: "<aqua><bold>أكثر البلوكات</bold>"
+      lore: []
+    stats-areas:
+      name: "<yellow><bold>مناطق التعدين</bold>"
+      lore: ["<gray>أكثر الشانكات بالخامات:"]
